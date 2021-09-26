@@ -21,7 +21,7 @@ class CreateTimeTable extends Migration
            $table->date('date_worked');
            $table->timestamp('time_in')->nullable();
            $table->timestamp('time_out')->nullable();
-           $table->decimal('total_hours');
+           $table->decimal('total_hours', $precision=9, $scale=2);
            $table->decimal('regular_hours', $precision=9, $scale =2);
            $table->decimal('over_time', $precision=9, $scale=2);
         });
