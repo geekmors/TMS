@@ -15,9 +15,5 @@ class DomainListSeeder extends Seeder
     public function run()
     {
 
-        DB::table('domain_list')->insert([
-            'domain_name'=>'gmail.com'
-        ]);
-        //
     }
 }
