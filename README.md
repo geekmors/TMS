@@ -54,6 +54,7 @@ To setup the project open a terminal/console and follow these steps.
 11. then open http://localhost:8000/ on your browser
 12. If a page shows up with the text "Hello World!" then you were successful, if instead you see an error message, let Karl know in the group chat.
 
+---
 If you need help setting up, let Karl know via the group chat and have him get into a call to go through the process.
 
 Learn more about Laravel via the [Laravel docs](https://laravel.com/docs/8.x)
