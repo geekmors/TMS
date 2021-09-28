@@ -14,22 +14,9 @@ class TypographySizeSeeder extends Seeder
     public function run()
     {
         DB::table('typography_size')->insert([
-            'description'=>'extra-small'
+            'description'=>'default'
         ]);
         
-        DB::table('typography_size')->insert([
-            'description'=>'small'
-        ]);
-        DB::table('typography_size')->insert([
-            'description'=>'medium'
-        ]);
-        DB::table('typography_size')->insert([
-            'description'=>'large'
-        ]);
-        
-        DB::table('typography_size')->insert([
-            'description'=>'extra-large'
-        ]);
         
         
         
