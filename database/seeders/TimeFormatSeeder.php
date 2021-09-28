@@ -13,7 +13,7 @@ class TimeFormatSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('typography_size')->insert([
+        DB::table('time_format')->insert([
             'description'=>'default'
         ]);
         
