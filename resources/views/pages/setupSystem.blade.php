@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.setup')
 
 @section('content')
 <h1>Setup Time Management System</h1>

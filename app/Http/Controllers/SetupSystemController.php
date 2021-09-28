@@ -30,10 +30,11 @@ class SetupSystemController extends Controller
         else return view('pages.setupSystemSettings',['hasData'=>false]);
     }
     public function createSetupSystemSettings(Request $request){
-        // validate the company logo
-        $request->validate([
-            'companyLogo'=>'mimes:png,jpeg|max:4096'
-        ]);
+        if($request->input('imgType') == "file")
+            // validate the company logo
+            $request->validate([
+                'companyLogo'=>'mimes:png,jpeg|max:4096'
+            ]);
         // add user's email domain to domain_list
         $domain = new DomainList;
         $domain->domain_name = $request->input('domain');
@@ -43,12 +44,16 @@ class SetupSystemController extends Controller
         $systemSetting->system_time = date('H:i:s'); //[K.A.] will change later on in the project
         $systemSetting->enforce_domain = $request->input('enforceDomainList','0') == "1";
 
-        if($request->file()){
+        if($request->input('imgType')=="file" && $request->file()){
             // if a file was submitted then, we store it to the storage server and save the path in the 
             // system setting table
             $name = $request->file('companyLogo')->getClientOriginalName();
             $filePath = $request->file('companyLogo')->storeAs('uploads', $name, 'public');            
             $systemSetting->system_logo = "/storage/" . $filePath;
+        }
+        // if the image is a URL
+        else if($request->input('imgType') == "url" && $request->input('companyLogo')){
+            $systemSetting->system_logo = $request->input('companyLogo');
         }
         else { // if no company logo was specified, then the default company logo is used.
             $systemSetting->system_logo = config('app.default_company_logo');

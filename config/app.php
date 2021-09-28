@@ -231,6 +231,6 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
     ],
-    'default_company_logo'=>env('DEFAULT_COMPANY_LOGO','/sysimages/defaultCompanyImage.png')
+    'default_company_logo'=>env('DEFAULT_COMPANY_LOGO','/sysimages/defaultCompanyImage.png'),
 
 ];
