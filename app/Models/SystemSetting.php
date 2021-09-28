@@ -10,5 +10,12 @@ class SystemSetting extends Model
     use HasFactory;
     protected $table ='system_setting';
     public $timestamps = false;
-
+    public static function getCompanyLogo(){
+        $systemSetting = SystemSetting::all();
+        if($systemSetting){
+            $systemSetting = $systemSetting->first();
+            return $systemSetting->system_logo;
+        }
+        else return null;
+    }
 }

@@ -51,7 +51,7 @@ class SetupSystemController extends Controller
             $systemSetting->system_logo = "/storage/" . $filePath;
         }
         else { // if no company logo was specified, then the default company logo is used.
-            $systemSetting->system_logo = "https://lh5.googleusercontent.com/CMVK4PrU4gQAS06mB_rxj6v6QyEBJWOQp4RsbJwpFR8AOzpfnf3-366JHbA7ozGQAnpzqWTf6J-X4g-zvXeZ=w1920-h937-rw"; //default company Logo
+            $systemSetting->system_logo = config('app.default_company_logo');
         } 
 
         // save the system settings

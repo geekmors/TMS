@@ -58,10 +58,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Application Timezone
+    | Application Time zone
     |--------------------------------------------------------------------------
     |
-    | Here you may specify the default timezone for your application, which
+    | Here you may specify the default time zone for your application, which
     | will be used by the PHP date and date-time functions. We have gone
     | ahead and set this to a sensible default for you out of the box.
     |
@@ -231,5 +231,6 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
     ],
+    'default_company_logo'=>env('DEFAULT_COMPANY_LOGO','/sysimages/defaultCompanyImage.png')
 
 ];
