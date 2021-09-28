@@ -9,5 +9,5 @@ class UserSetting extends Model
 {
     use HasFactory;
     protected $table ='user_setting';
-
+    public $timestamps = false;
 }

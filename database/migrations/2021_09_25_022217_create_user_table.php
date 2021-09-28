@@ -25,6 +25,7 @@ class CreateUserTable extends Migration
             $table->foreign('roleId')->references('id')->on('roles'); */
             $table->foreignIdFor(Role::class);
             $table->timestamp('timestamp_created')->nullable();
+            $table->rememberToken();
             $table->date('timestamp_lastlogin');
         });
     }
