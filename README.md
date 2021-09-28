@@ -7,7 +7,7 @@
 - MySQL
 - git
 
-## Setting up - 9/25/2021
+## Setting up - 9/27/2021
 To setup the project open a terminal/console and follow these steps.
 1. At an appropriate location, clone the repo using 
     ```
@@ -48,7 +48,7 @@ To setup the project open a terminal/console and follow these steps.
     ```
 10. Create a Symbolic link to the storage/app/ folder to save files using the below command.
     ```
-    $php artisan storage:link
+    $ php artisan storage:link
     ```
 11. Add Google client Id and secret to your .env file. **Message Karl so he provides his one** 
     ```
@@ -64,7 +64,7 @@ To setup the project open a terminal/console and follow these steps.
     $ php artisan serve
     ```
 13. then open http://localhost:8000/ on your browser
-14. If a page shows up with the text "Hello World!" then you were successful, if instead you see an error message, let Karl know in the group chat.
+14. If a page shows up telling you to setup the System then you were successful, if instead you see an error message, let Karl know in the group chat.
 
 ---
 If you need help setting up, let Karl know via the group chat and have him get into a call to go through the process.
