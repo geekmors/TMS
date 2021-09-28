@@ -9,4 +9,6 @@ class SystemSetting extends Model
 {
     use HasFactory;
     protected $table ='system_setting';
+    public $timestamps = false;
+
 }

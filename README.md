@@ -46,13 +46,25 @@ To setup the project open a terminal/console and follow these steps.
     ```
     $ php artisan db:seed
     ```
+10. Create a Symbolic link to the storage/app/ folder to save files using the below command.
+    ```
+    $php artisan storage:link
+    ```
+11. Add Google client Id and secret to your .env file. **Message Karl so he provides his one** 
+    ```
+    GOOGLE_CLIENT_ID="<random_numbers>.apps.googleusercontent.com"
+    GOOGLE_CLIENT_SECRET="<random_security_key>"
+    GOOGLE_REDIRECT="http://localhost:8000/authorized" # add this line too
+    ```
+    ***Note*: never share the key nor the client id with anyone outside the group after being provided by Karl.**
 
-10. To test that you were successful run the below command to start the development server, if an error is thrown let Karl know in the group chat.
+12. To test that you were successful run the below command to start the development server, if an error is thrown let Karl know in the group chat.
+
     ```
     $ php artisan serve
     ```
-11. then open http://localhost:8000/ on your browser
-12. If a page shows up with the text "Hello World!" then you were successful, if instead you see an error message, let Karl know in the group chat.
+13. then open http://localhost:8000/ on your browser
+14. If a page shows up with the text "Hello World!" then you were successful, if instead you see an error message, let Karl know in the group chat.
 
 ---
 If you need help setting up, let Karl know via the group chat and have him get into a call to go through the process.

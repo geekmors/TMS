@@ -9,4 +9,6 @@ class DomainList extends Model
 {
     use HasFactory;
     protected $table ="domain_list";
+    public $timestamps = false;
+
 }

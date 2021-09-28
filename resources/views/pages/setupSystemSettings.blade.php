@@ -2,6 +2,7 @@
 
 @section('content')
 <h1>Setup Time Management System</h1>
+@if($hasData)
 <div>
     <h2>You're account has been created</h2>
     <img src="{{$userSettings->avatar}}" alt="your google account avatar">
@@ -31,7 +32,7 @@
             </div>
         @endif
         <div class="form-group" style="margin-bottom:10px;">
-            <label for="enforceDomainList"><input type="checkbox" name="enforceDomainList" id="enforceDomainList"> Enforce Domain List on login</label>
+            <label for="enforceDomainList"><input type="checkbox" name="enforceDomainList" value="1" id="enforceDomainList"> Enforce Domain List on login</label>
             <br>
             <br>
 
@@ -44,4 +45,7 @@
 
     </form>
 </div>
+@else
+    <p>No data to show, user was not created successfully</p>
+@endif
 @endsection

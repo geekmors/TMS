@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Database\Seeders\rolesseeder;
+use Database\Seeders\TimeFormatSeeder;
+use Database\Seeders\TypographySizeSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,5 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         $this->call(rolesseeder::class);
+        $this->call(TypographySizeSeeder::class);
+        $this->call(TimeFormatSeeder::class);
     }
 }

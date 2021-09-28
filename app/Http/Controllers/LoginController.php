@@ -12,7 +12,6 @@ class LoginController extends Controller
 {
     // redirects to the google login page.
     public function redirectToProvider(){
-        Log::debug('redirectToProvider line 15 ');
         return Socialite::driver('google')->redirect();
     }
     // Will login the user to the session
@@ -26,7 +25,7 @@ class LoginController extends Controller
         catch(\Exception $e){
             // per UC-1
             if($request->session()->has("run_setup")){
-                Log:debug('exception in handleProverCallback line 29');
+                
                 return redirect()->to('/setup');
             }
 
@@ -36,6 +35,8 @@ class LoginController extends Controller
         // check if the user already exists, if they do just log them in
         $existingUser = Users::where('email', '=', $user->email)->first();
         
+        // [------] For UC-5 - remember to check if u should enforce domain_list before logging in the user
+        //              if we must enforce domain then we must check that the user's email matches a domain in the domain list
         if($existingUser){
             $existingUser->timestamp_lastlogin = date('d M Y H:i:s');
             $existingUser->save();
@@ -44,40 +45,24 @@ class LoginController extends Controller
         else{
             // create a new user
             $newUser = new Users;
-            $newUser->first_name = $user->user["given_name"];
-            $newUser->last_name = $user->user["family_name"];
-            $newUser->email = $user->user["email"];
-            $newUser->google_id = $user->id;
-            $newUser->dob = '0/0/0/'; // field will be removed from database
-            $newUser->timestamp_lastlogin = date('Y-m-d H:i:s');
+            $newUser->createUser($user, $role_id = $request->session()->has("run_setup")? 1 : 3) // if run_setup is set the role id is set to admin else set it to employee
+                ->save();
             
-
-            // set the role to admin if this is the first user; else by default set the user to employee
-            $newUser->role_id = $request->session()->has("run_setup")? 1 : 3; // 1->admin; 3->employee
-            $newUser->save();
             // add default user settings
             $userSetting = new UserSetting;
-            $userSetting->users_id = $newUser->id;
-            $userSetting->dark_theme = false;
-            $userSetting->avatar = $user->user["picture"];
-            $userSetting->avatar_original = $userSetting->avatar;
-            $userSetting->is_enabled = true;
-            // set below user settings to default; 9/27/2021 - fix needed on migration side.
-            $userSetting->typography_size_id = 1;
-            $userSetting->time_format_id = 1;
-            //--------            
+            $userSetting->createDefault($newUser->id, $user->user["picture"])
+                ->save();
 
-            $userSetting->save();
             //login the new user
             auth()->login($newUser, true);
 
-            if($request->session()->has('run_setup')){
-                Log::debug('in authenticated/run setup redirect line 75');
+            // if we are in the setup process then we redirect to the next route in the setup process
+            if($request->session()->has('run_setup')){                
                 return redirect()->to('/setup/system-settings');
             }
             
         }
-        // temp
+        // temp --------------
         return redirect('/');
 
     }

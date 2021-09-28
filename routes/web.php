@@ -27,6 +27,6 @@ Route::get('/authorized',[LoginController::class,'handleProviderCallback'])->nam
 Route::middleware(['isFirstUse'])->group(function(){
     Route::get('/setup', [SetupSystemController::class, 'index'])->name('initSetup');
     Route::get('/setup/system-settings', [SetupSystemController::class, 'viewSetupSystemSettings'])->name('setupSystemSettings');
-    Route::post('/setup/system-settings', [SetupSystemContoller::class, 'createSetupSystemSettings'])->name('createSystemSettings');
+    Route::post('/setup/system-settings', [SetupSystemController::class, 'createSetupSystemSettings'])->name('createSystemSettings');
 });
 //-------------------
