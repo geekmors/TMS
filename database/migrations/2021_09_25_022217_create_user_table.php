@@ -18,13 +18,14 @@ class CreateUserTable extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('dob');
+        
             $table->string('google_id');
             $table->string('email')->unique();
            /* $table->foreignId('roleId');
             $table->foreign('roleId')->references('id')->on('roles'); */
             $table->foreignIdFor(Role::class);
             $table->timestamp('timestamp_created')->nullable();
+            $table->rememberToken();
             $table->date('timestamp_lastlogin');
         });
     }
@@ -36,6 +37,6 @@ class CreateUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user');
+        Schema::dropIfExists('users');
     }
 }
