@@ -19,7 +19,7 @@ class UserSetting extends Model
         $this->avatar_original = $this->avatar;
         $this->is_enabled = true;
         // set below user settings to default
-        $this->typography_size_id = 1;
+        $this->typography_size_id = 1; 
         $this->time_format_id = 1;
         //-------- 
         return $this;

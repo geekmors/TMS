@@ -12,16 +12,17 @@ class UsersTest extends TestCase
      *
      * @return void
      */
-    
-    public function test_example()
-    {
+    public function test_user_settings(){
         $user = Users::first();
-        if(!$user){
-
-            $this->assertTrue(true);
-        }
-        else{
-            $this->assertTrue(false);
-        }
+        
+        $this->assertFalse(is_null($user));
+        $this->assertTrue(!is_null($user->settings()));
+        $this->assertTrue($user->settings()->is_enabled == 1);
+    }
+    public function test_user_role(){
+        $user = Users::first();
+        $this->assertFalse(is_null($user));
+        $this->assertTrue(!is_null($user->role()));
+        $this->assertTrue($user->role()->description == 'admin');
     }
 }

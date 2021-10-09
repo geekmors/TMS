@@ -8,6 +8,7 @@ namespace App\Http;
 
 use Illuminate\Contracts\View\View;
 use App\Models\SystemSetting;
+use App\Models\UserSetting;
 use Log;
 class ViewComposer {
 
@@ -18,8 +19,12 @@ class ViewComposer {
    */
   public function __construct()
   {
-      $logo = SystemSetting::getCompanyLogo(); 
-      $this->logo = $logo ? $logo : config('app.default_company_logo');
+     
+      $this->userSetting = [];
+      if(auth()->check()){
+        $userId = auth()->user()->id;
+        $this->userSetting = UserSetting::where('users_id','=',$userId)->first();
+      }
   }
 
   /**
@@ -29,7 +34,9 @@ class ViewComposer {
    */
   public function compose(View $view)
   {
-    $view->with('logo', $this->logo);
+    if($this->userSetting){
+      $view->with('userSetting', $this->userSetting);
+    }
   }
 
 }

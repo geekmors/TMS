@@ -36,49 +36,12 @@
             <br>
             <br>
 
-            <label for="companyLogo">Set Company Logo:</label>
-            <span >
-                <input type="radio" name="imgType" value="file" checked> Upload File
-                <input type="radio" name="imgType" value="url"> Use a URL
-            </span> <br>
-            <input type="file" name="companyLogo" id="companyLogo" accept="image/png, image/jpeg" placeholder="Enter image url">
-            <p>If left empty then the default company logo will be used.</p>
-            <h3>Current Logo:</h3>
-            <img id="companyLogoImg" style="width:150px;" src="{{$logo}}" alt="current logo">
-
         </div>
         <input type="hidden" name="domain" value="{{explode('@', $user->email)[1]}}">
         <button type="submit">Save</button> <button type="reset">Reset</button>
 
     </form>
 </div>
-<script> // script to change company logo type from file to URL
-    var img = document.getElementById('companyLogoImg')
-    var imgFileUpload = document.getElementById('companyLogo')
-    var imgTypes = document.querySelectorAll('[name="imgType"]')
-
-    for(var imgType of imgTypes){
-        imgType.addEventListener('change', function(e){
-            if(this.value == "file"){
-                imgFileUpload.type = "file"
-            }else{
-                imgFileUpload.type = "text"
-            }
-        })
-    }
-
-    imgFileUpload.addEventListener('change', function(){
-        if(this.type == "file"){
-
-            var fileReader = new FileReader()
-            fileReader.readAsDataURL(this.files[0])
-            fileReader.onload = function(eReader){
-                img.src = eReader.target.result
-            }
-        }
-        else img.src = imgFileUpload.value
-    })
-</script>
 @else
     <p>No data to show, user was not created successfully</p>
 @endif

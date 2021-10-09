@@ -19,7 +19,6 @@ class CreateSystemSettingTable extends Migration
             $table->time('system_time');
             
             $table->boolean('enforce_domain');
-            $table->string('system_logo');
         });
     }
 
