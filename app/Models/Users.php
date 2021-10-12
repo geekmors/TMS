@@ -12,7 +12,7 @@ class Users extends Authenticatable
     use HasFactory;
     protected $table = 'users';
     public function settings(){
-        return UserSetting::where('users_id', '=',$this->id)->first();
+        return UserSetting::where('users_id', '=', $this->id)->first();
     }
     public function role(){
         return Role::where('id','=',$this->id)->first();
