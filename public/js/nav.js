@@ -1,52 +1,73 @@
-  
-  // Navbar globals
-  // NOTE: added state management so that the navbar toggle state is kept across page reloads
-  var shouldToggle = function(state){ //only set state param if you need to change the state of should_nav_toggle, if left blank then it will simply return the value of should_nav_toggle
-    if(typeof state == "undefined"){
-      try{
-        return appDB.get('should_nav_toggle')
-      }
-      catch(e){
-        appDB.set('should_nav_toggle', false)
-        return false
-      }
-    }
-    //NOTE TO SELF: add check that checks that state is boolean
-    else appDB.set('should_nav_toggle', state) // if state param is not undefined then update the state of should_nav_toggle
-  };
+//navbar functions
+var toggle = false;
 
-  var $sidenav = $("#side-nav")
-  var $toggleBtn = $("#toggle")
-  
-  //navbar functions
-  function toggleNav() {
-    var toggle = shouldToggle()
-    $("#toggle-icon").css('transform', toggle ? 'rotate(0deg)' : 'rotate(180deg)')
-    shouldToggle(!toggle) //update should_nav_toggle state
+function toggleNav() {
+  if( toggle )
+    document.getElementById("toggle-icon").style.color = '#025426';
+  else
+    document.getElementById("toggle-icon").style.color = '#3b3b3b';
+
+  toggle = !toggle;
+}
+
+var mobiletoggle = false;
+
+function toggleMobileMenu() {
+  if( mobiletoggle )
+    document.getElementById("mobile-menu").style.height = "100%";
+  else
+    document.getElementById("mobile-menu").style.height = "0%";
+
+  mobiletoggle = !mobiletoggle;
+};
+
+
+/* This is a terrible way of doing it, but getelementsbyclass wasn't working for me for some reason */
+function openNav() {
+   if( toggle ) {
+
+    var sidenav = document.getElementById("side-nav");
+
+    sidenav.classList.add("side-nav-expanded");
+    sidenav.classList.remove("side-nav-collapsed");
+
+    document.getElementById("dashboard").classList.remove("sidenav-text-hidden");
+    document.getElementById("dashboard").classList.add("sidenav-text-visible");
+
+    document.getElementById("timesheet").classList.remove("sidenav-text-hidden");
+    document.getElementById("timesheet").classList.add("sidenav-text-visible");
+
+    document.getElementById("reports").classList.remove("sidenav-text-hidden");
+    document.getElementById("reports").classList.add("sidenav-text-visible");
+
+    document.getElementById("management").classList.remove("sidenav-text-hidden");
+    document.getElementById("management").classList.add("sidenav-text-visible");
+
+    document.getElementById("settings").classList.remove("sidenav-text-hidden");
+    document.getElementById("settings").classList.add("sidenav-text-visible");
   }
-  function openNav() {
-    if (shouldToggle()) {
-      $sidenav.addClass("side-nav-expanded").removeClass("side-nav-collapsed");
-      // using custom functions view util.js
-      $('.sidenav-text-hidden').addClass("sidenav-text-visible").removeClass("sidenav-text-hidden")
-    }
+}
+
+function closeNav() {
+  if( toggle ){
+    var sidenav = document.getElementById("side-nav");
+
+    sidenav.classList.add("side-nav-collapsed");
+    sidenav.classList.remove("side-nav-expanded");
+
+    document.getElementById("dashboard").classList.remove("sidenav-text-visible");
+    document.getElementById("dashboard").classList.add("sidenav-text-hidden");
+
+    document.getElementById("timesheet").classList.remove("sidenav-text-visible");
+    document.getElementById("timesheet").classList.add("sidenav-text-hidden");
+
+    document.getElementById("reports").classList.remove("sidenav-text-visible");
+    document.getElementById("reports").classList.add("sidenav-text-hidden");
+
+    document.getElementById("management").classList.remove("sidenav-text-visible");
+    document.getElementById("management").classList.add("sidenav-text-hidden");
+
+    document.getElementById("settings").classList.remove("sidenav-text-visible");
+    document.getElementById("settings").classList.add("sidenav-text-hidden");
   }
-  function closeNav() {
-    if (shouldToggle()) {
-      $sidenav.addClass("side-nav-collapsed").removeClass("side-nav-expanded")
-      $(".sidenav-text-visible").addClass("sidenav-text-hidden").removeClass("sidenav-text-visible")
-    }
-  }
-  
-  // Use the state of the should_nav_toggle to show or hide the nav on page reload
-  if(shouldToggle()){
-    $("#toggle-icon").css('transform', 'rotate(180deg)')
-    closeNav()
-  }
-  else{
-    $(".toggle-icon").css("transform", 'rotate(0deg)')
-    openNav()
-  }
-  // Event handler definitions
-  $toggleBtn.click(toggleNav)
-  $sidenav.hover(openNav, closeNav)
+}
