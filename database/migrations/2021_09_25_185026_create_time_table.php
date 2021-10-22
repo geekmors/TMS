@@ -19,6 +19,7 @@ class CreateTimeTable extends Migration
             $table->id();
             $table->foreignIdFor(Users::class);
            $table->date('date_worked');
+           $table->string('entry');
            $table->timestamp('time_in')->nullable();
            $table->timestamp('time_out')->nullable();
            $table->decimal('total_hours', $precision=9, $scale=2);
