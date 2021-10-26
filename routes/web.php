@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SetupSystemController;
+use App\Http\Controllers\SystemSettingsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,4 +37,19 @@ Route::middleware(['isFirstUse'])->group(function(){
     Route::get('/setup/system-settings', [SetupSystemController::class, 'viewSetupSystemSettings'])->name('setupSystemSettings');
     Route::post('/setup/system-settings', [SetupSystemController::class, 'createSetupSystemSettings'])->name('createSystemSettings');
 });
+//-------------------
+
+// Routes for UC-2
+//--------------------
+//calls controller to load page only - app > http > SystemSettingsController
+Route::get('/system-settings', [SystemSettingsController::class, 'index'])->name('viewPage');
+
+//saving domain
+Route::post('/system-settings', [SystemSettingsController::class, 'store'])->name('addDomain');
+
+//deleting domain
+Route::get('/system-settings/delete/{id}', [SystemSettingsController::class, 'delete'])->name('removeDomain');
+
+//toggle on enforcement
+Route::get('/system-settings/enforce', [SystemSettingsController::class, 'update'])->name('updateEnforcement');
 //-------------------
