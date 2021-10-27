@@ -12,7 +12,7 @@ class Time extends Model
     public $timestamps = false;
 
     static public function getAllForUser($userId){
-        return Time::all()->where('users_id','=', $userId);        
+        return Time::where('users_id','=', $userId)->get();        
     }
     public function getRegularHours($totalTime){
 
