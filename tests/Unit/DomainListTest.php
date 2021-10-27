@@ -18,8 +18,9 @@ class DomainListTest extends TestCase
        //$this->assertTrue(!is_null(DomainList::first()));
         
         if(DomainList::contains('gmail.com'))
-            $this->assertTrue(true);
+            $this->assertTrue(true); 
         else if(!DomainList::contains('ksm.com'))
             $this->assertFalse(false);
+        $this->assertTrue(DomainList::contains('ksm.com'));
     }
 }

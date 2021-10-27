@@ -12,7 +12,7 @@ class DomainList extends Model
     public $timestamps = false;
     
     public static function contains($domain){
-        $domainExists = DomainList::where('domain_name', '=', $domain);
-        return !is_null($domainExists);
+        $domainExists = DomainList::where('domain_name', '=', $domain)->first();
+        return (!is_null($domainExists)) == 1;
     }
 }
