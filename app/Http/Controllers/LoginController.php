@@ -45,7 +45,7 @@ class LoginController extends Controller
         //      note: if no system setting exists as yet, then the function returns false
         if(SystemSetting::enforceDomain()){
             $emailDomain = explode('@', $user->user["email"])[1]; //extract the email domain from the user's email
-            
+            Log::info('Enforcing Domain');
             // check if the user's email domain is NOT in the domain list, in which case we redirect to the login page
             if(!DomainList::contains($emailDomain)){
                 return redirect('/login');
