@@ -46,6 +46,11 @@ return [
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
         ],
+        'TMSErrors'=>[
+            'driver' => 'single',
+            'path'=>storage_path('logs/chronosTMS.error.log'),
+            'level'=> env('LOG_LEVEL','debug')
+        ],
 
         'daily' => [
             'driver' => 'daily',

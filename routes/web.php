@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SetupSystemController;
+use App\Http\Controllers\TimesheetController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,6 +28,9 @@ Route::middleware(['isLoggedIn'])->group(function(){
     Route::get('/signout', [LoginController::class,'signOut'])->name('signout');
     Route::view('/','pages.home')->name('home');
     Route::get('/roles', [RoleController::class,'index'])->name('roles');
+    
+    Route::get('/timesheet', [TimesheetController::class, 'index'])->name('timesheet');
+    Route::post('/timesheet', [TimesheetController::class, 'newEntry'])->name('timesheet.newEntry');
 });
 
 // Routes for UC-1

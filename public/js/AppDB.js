@@ -55,10 +55,12 @@ class AppDB {
         if(typeof key != "string"){
             throw new Error('AppDB.resetKey: key is not a string')
         }
-        let currentDB = localStorage.getItem(this.name)
+        let currentDB = JSON.parse(localStorage.getItem(this.name))
         
         if(currentDB[key]){
-           return delete currentDB[key]
+           delete currentDB[key]
+           localStorage.setItem(this.name, JSON.stringify(currentDB))
+           return true
         }
         return true // since the key does not exist, then nothing happens
     }

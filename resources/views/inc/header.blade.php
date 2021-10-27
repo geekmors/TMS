@@ -2,7 +2,7 @@
     <!-- Top Nav bar with ksm logo and user icon -->
     <div id="top-nav" class="d-flex">
         <div class="align-self-center logo-div">
-            <a href="/"><img id="logo" src="/sysimages/ksm-logo.png" style="width:18em;"></a>
+            <a href="/"><img id="logo" src="/sysimages/ksm-logo.png" ></a>
         </div>
 
         <ul class="nav ml-auto align-self-center">

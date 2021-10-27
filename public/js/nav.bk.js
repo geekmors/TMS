@@ -13,16 +13,10 @@ function toggleNav() {
 var mobiletoggle = false;
 
 function toggleMobileMenu() {
-  if( mobiletoggle ) {
+  if( mobiletoggle )
     document.getElementById("mobile-menu").style.height = "100%";
-    document.getElementById("mobile-menu-icon").classList.remove("fa-bars");
-    document.getElementById("mobile-menu-icon").classList.add("fa-times");
-  }
-  else {
+  else
     document.getElementById("mobile-menu").style.height = "0%";
-    document.getElementById("mobile-menu-icon").classList.remove("fa-times");
-    document.getElementById("mobile-menu-icon").classList.add("fa-bars");
-  }
 
   mobiletoggle = !mobiletoggle;
 };
@@ -51,8 +45,6 @@ function openNav() {
 
     document.getElementById("settings").classList.remove("sidenav-text-hidden");
     document.getElementById("settings").classList.add("sidenav-text-visible");
-
-    document.body.style.paddingLeft = '220px';
   }
 }
 
@@ -77,7 +69,5 @@ function closeNav() {
 
     document.getElementById("settings").classList.remove("sidenav-text-visible");
     document.getElementById("settings").classList.add("sidenav-text-hidden");
-
-    document.body.style.paddingLeft = '80px';
   }
 }
