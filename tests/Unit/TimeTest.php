@@ -18,4 +18,8 @@ class TimeTest extends TestCase
         $entries = Time::getAllForUser(1);
         $this->assertTrue(count($entries) > 0);
     }
+    public function test_timeInOutValid(){
+        $this->assertTrue(Time::isValidInOut('12:34:45', '13:21:34'));
+        $this->assertFalse(Time::isValidInOut('09:45:12', '08:12:04'));
+    }
 }

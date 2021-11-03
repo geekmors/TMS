@@ -1,0 +1,10 @@
+input.invalid{
+    border: red 1px solid;
+}
+input.invalid:focus{
+    outline:none;
+}
+.invalid-feedback-message{
+    color:red;
+    display: block;
+}

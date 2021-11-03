@@ -33,6 +33,10 @@ class Timer{
     }
     get timeString(){
         
-        return `${_pad(this._startDate.getHours())}:${_pad(this._startDate.getMinutes())}`
+        return `${_pad(this._startDate.getHours())}:${_pad(this._startDate.getMinutes())}:${_pad(this._startDate.getSeconds())}`
+    }
+    get currentTimeString(){
+        let currentTime = new Date()
+        return `${_pad(currentTime.getHours())}:${_pad(currentTime.getMinutes())}:${_pad(currentTime.getSeconds())}`
     }
 }

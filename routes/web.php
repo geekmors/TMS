@@ -30,7 +30,9 @@ Route::middleware(['isLoggedIn'])->group(function(){
     Route::get('/roles', [RoleController::class,'index'])->name('roles');
     
     Route::get('/timesheet', [TimesheetController::class, 'index'])->name('timesheet');
-    Route::post('/timesheet', [TimesheetController::class, 'newEntry'])->name('timesheet.newEntry');
+    Route::post('/timesheet/create', [TimesheetController::class, 'newEntry'])->name('timesheet.newEntry');
+    Route::post('/timesheet/update', [TimesheetController::class, 'update'])->name('timesheet.update');
+
 });
 
 // Routes for UC-1

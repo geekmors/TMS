@@ -4,12 +4,12 @@
      *  1. on date changed
      *  2. on entry name changed
      */
-     $.ajaxSetup({
+    $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    var cron = null // holds the setInterval process
+    cron = null // holds the setInterval process, GLOBAL var
 
     function clearEntryForm(){ // will clear the time sheet entry form
         $('#entry-name').val('') // clear entry name
@@ -37,8 +37,9 @@
         }
         cron = setInterval(function(){
             $('#elapsed-time').text(timer.elapsed())
+            $('#current-time').val(timer.currentTimeString)
         }, 500)
-        $('#start-time').val(timer.timeString)     
+        $('#start-time').val(timer.timeString)
         $(this).hide()
         $('.stop-timer').show()
         
@@ -50,38 +51,73 @@
         })
     })
     $('.stop-timer').click(function(e){
+        if (!cron) return //only stop the timer if the timer is running
+        
         let endTime = new Timer()
-        clearInterval(cron)
+        
         var data = {
             entry_name :$('#entry-name').val(),
             entry_date: $('#entry-date').val(),
             entry_start_time: $('#start-time').val(),
             entry_end_time: endTime.timeString,
             entry_elapsed_time: $('#elapsed-time').text()
-        }
-        sendData(data)
-        clearEntryForm()
-        $(this).hide()
-        $('.start-timer').show()
-        appDB.resetKey('timesheet_entry')
+        },
+        $this = $(this)
+        sendData(data, function(){ // after success completion
+            clearEntryForm()
+            $this.hide()
+            $('.start-timer').show()
+            appDB.resetKey('timesheet_entry')
+            clearInterval(cron)
+            cron = false
+        })
     })
-    var sendData = data =>{
+    var sendData = (data, cb) =>{
        
-        $.post('/timesheet', data, function(response){
+        $.post('/timesheet/create', data, function(response){
             Alert({status:true, message:'Entry successfully saved!'})
             console.log(response)
             addEntryToList(response.data)
-        }).fail(function(){
-            Alert({status:false, message:'The timesheet entry could not be saved.'})
+            cb()
+        }).fail(function(xhr, status, error){
+            console.log(xhr.responseText)
+            Alert({status:false, message:`The timesheet entry could not be saved. Try reloading and saving again. If issue persists, have admin review error logs.`})
         })
     }
     var addEntryToList = data => {
         let template = `
-        <li class="list-group-item">
-            Entry Name: ${data.entry_name} |
-             Date: ${data.entry_date} |
-             Time Start: <input type="time" name="" id="" value="${data.entry_start_time}"> |
-             Time End: <input type="time" name="" id="" value="${data.entry_end_time}">
+        <li class="list-group-item d-flex justify-content-around" data-id="${data.id}">
+                <span class="item">
+                    Entry Name:
+                    <input class="entry-data entry-inputs" type="text" name="entry_name" value="${data.entry}" data-backup="${data.entry}">
+                    <div style="display:none" class="invalid-feedback-message text-center">Entry name cannot be blank</div>
+                
+                    </span>
+                <span class="item">
+                    Date: <input class="entry-data entry-inputs" type="date" name="entry_date" value="${data.date_worked}" data-backup="${data.date_worked}">
+                </span>
+                <span class="item">
+                    Time Start: <input class="entry-data entry-inputs" step="1" type="time" name="entry_start_time" id="" value="${data.time_in}" data-backup="${data.time_in}">
+                </span>
+                <span class="item">
+                    Time End: <input class="entry-data entry-inputs" step="1" type="time" name="entry_end_time" id="" value="${data.time_out}" data-backup="${data.time_out}">
+                </span>
+                <span class="item">
+                    Total Time: <span class="entry_elapsed_time" data-backup="${data.total_hours}">${data.total_hours}</span>
+                </span>
+                <button class="save btn btn-outline-primary" title="save" data-id="${data.id}" style="display:none;">
+                    save
+                    <span class="fa fa-save"></span>
+                </button>
+                <button data-id="${data.id}" class="cancel btn btn-outline-warning" title="cancel edits" style="display:none;">
+                    cancel
+                    <span class="fa fa-times">
+                    </span>
+                </button>
+                <button data-id="${data.id}" class="resume btn btn-outline-success" title="resume entry">
+                    Resume
+                    <span class="fa fa-play"></span>
+                </button>
             </li>
         `
         $('#EntryList').append(template)
