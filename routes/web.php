@@ -5,7 +5,11 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SetupSystemController;
 use App\Http\Controllers\SystemSettingsController;
+<<<<<<< HEAD
 use App\Http\Controllers\TimesheetController;
+=======
+use App\Http\Controllers\UserManagementController;
+>>>>>>> UC3
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,17 +49,24 @@ Route::middleware(['isFirstUse'])->group(function(){
 });
 //-------------------
 
+
 // Routes for UC-2
-//--------------------
+//-------------------
 //calls controller to load page only - app > http > SystemSettingsController
 Route::get('/system-settings', [SystemSettingsController::class, 'index'])->name('viewPage');
-
 //saving domain
 Route::post('/system-settings', [SystemSettingsController::class, 'store'])->name('addDomain');
-
 //deleting domain
 Route::get('/system-settings/delete/{id}', [SystemSettingsController::class, 'delete'])->name('removeDomain');
-
 //toggle on enforcement
 Route::get('/system-settings/enforce', [SystemSettingsController::class, 'update'])->name('updateEnforcement');
+//-------------------
+
+
+// Routes for UC-3
+//-------------------
+//redirect to user management page
+Route::get('/user', [UserManagementController::class, 'index'])->name('viewUsers');
+//First Name Filter
+Route::post('/user', [UserManagementController::class, 'search'])->name('filterFName');
 //-------------------
