@@ -73,19 +73,15 @@ class Time extends Model
         return $entrySummaryList;
     }
     static public function getTimeEntryDataFor($query_params){
-        $sqlQ = Time::where("users_id", "=" , $query_params["user_id"])
-                        ->whereBetween("date_worked", [$query_params["from"], ["to"]])
-                        ->orderBy("date_worked",$query_params["sort_date"])
-                        ->orderBy("time_in", $query_params["sort_timeIn"])
-                        ->toSql();
+        
         $entries = Time::where("users_id", "=" , $query_params["user_id"])
                         ->whereBetween("date_worked", [$query_params["from"], $query_params["to"]])
                         ->orderBy("date_worked",$query_params["sort_date"])
                         ->orderBy("time_in", $query_params["sort_timeIn"])
                         ->get();
         
-        Log::channel('TMSErrors')->error($sqlQ.PHP_EOL.$query_params["user_id"]);
-        if(is_null($entries)) return [];
+        
+        if(is_null($entries)) return false;
 
         $entrySummary = Time::getSummaryFromEntryQuerySet($entries);
         return $entrySummary;

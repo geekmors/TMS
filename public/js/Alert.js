@@ -5,8 +5,9 @@
  * @returns JQuery object referencing the alert Div in the DOM
  */
 function Alert({status, message}){
+    $('alert-custom').remove()
     let $template = $(`
-    <div class="alert alert-${status?'success':'danger'} alert-dismissible fade show" role="alert" style="
+    <div class="alert alert-${status?'success':'danger'} alert-dismissible fade show alert-custom" role="alert" style="
         position:fixed;
         width:80%;
         top: 0;
@@ -21,5 +22,8 @@ function Alert({status, message}){
     </div>
     `)
     $('body').append($template)
+    setTimeout(function(){
+        $template.remove()
+    }, 8000)
     return $template
 }

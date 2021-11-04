@@ -1,6 +1,6 @@
 var _rnd = value => Math.round(value),
     _flr = value => Math.floor(value),
-    _pad = num => num - 9 > 0 ? num : '0' + num
+    _pad = num => num > 9 ? num : '0' + num
 class Timer{
     constructor(startTime=Date.now()){
         this.startTime = startTime

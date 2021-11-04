@@ -19,15 +19,17 @@ class TimesheetController extends Controller
         }
         // Expected URL: /timesheet?from=YYYY-MM-DD&to=YYYY-MM-DD&sort_date=asc|desc&sort_starttime=asc|desc
         // if query strings are not set, then it fallbacks to the default values for each query string variable
+        $defaultFrom = strtotime(date('Y-m-d').' -20 days');
         $queryParams = [
             "user_id" => auth()->user()->id,
-            "from" => $request->query("from", date("Y-m")."01"),
-            "to" => $request->query("to", date("Y-m-d")),
+            "from" => $request->query("from", date("Y-m-d", $defaultFrom)),
+            "to" => $request->query("to", date('Y').'-12-31'),//will bug out after 4 years lol
             "sort_date" => $request->query("sort_date", "desc"),
             "sort_timeIn" => $request->query("sort_starttime", "desc")
         ];
         return view('pages.timesheet', [
-            "timeSheetEntries" => Time::getTimeEntryDataFor($queryParams)
+            "timeSheetEntries" => Time::getTimeEntryDataFor($queryParams),
+            "queryParams" => $queryParams
         ]);
     }
     public function newEntry(Request $request){
@@ -97,14 +99,18 @@ class TimesheetController extends Controller
          * 
          */
         try{
+            $defaultFrom = strtotime(date('Y-m-d').' -20 days');
+
             $queryParams = [
                 "user_id" => $user_id,
-                "from" => $request->query("from", date("Y-m")."01"),
-                "to" => $request->query("to", date("Y-m-d")),
+                "from" => $request->query("from", $defaultFrom),
+                "to" => $request->query("to", date("Y")."-12-31"),
                 "sort_date" => $request->query("sort_date", "desc"),
                 "sort_timeIn" => $request->query("sort_starttime", "desc")
             ];
-            return response()->json(["data" => Time::getTimeEntryDataFor($queryParams)]);
+            return response()->json([
+                "data" => Time::getTimeEntryDataFor($queryParams)
+            ]);
         }
         catch(Exception $e){
             Log::channel('TMSErrors')->error($e->getMessage());
