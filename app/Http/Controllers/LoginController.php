@@ -31,7 +31,7 @@ class LoginController extends Controller
     public function handleProviderCallback(Request $request) {
         // check if the login was successful
         try{
-            $user = Socialite::driver('google')->user();
+            $user = Socialite::driver('google')->user(); // this seems to fail often
         }
         catch(\Exception $e){
             // per UC-1
@@ -66,7 +66,7 @@ class LoginController extends Controller
             $newUser = new Users;
             // if we are in the setup process then the new user is set to admin, else set the new user to employee
             $roleID = $request->session()->has("run_setup")? 1 /* admin */ : 3 /* employee */;
-            $newUser->createUser($user, $role_id = $roleID)->save();
+            $newUser->createUser($user, $roleID)->save();
             
             // add default user settings
             $userSetting = new UserSetting;

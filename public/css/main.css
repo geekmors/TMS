@@ -1,0 +1,106 @@
+body {
+  padding-top: 7em; /* shifts the content down so its not under the fixed top nav */
+  padding-left: 220px;
+  transition: 150ms linear;
+  background-color:#f0f0f0;
+}
+
+.content {
+  margin: 3em 5%;
+}
+
+.new-entry {
+  padding: 10px;
+}
+
+.spacer {
+  height: 3em;
+}
+
+.time-entry {
+  background-color: white;
+  border-radius: 5px;
+  padding: 2em;
+  box-shadow: 1px 1px 4px gray;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  /* time entry css */
+}
+
+.entry-form {
+  width: 80%;
+}
+
+.entry-inputs {
+  background-color:#f0f0f0;
+  border: 1px solid #dbdbdb;
+  height: 40px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.time-inputs {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.start-timer {
+  padding: 18px;
+  font-size: 22px;
+}
+
+@media only screen and (max-width: 800px) { /* mobile device css */
+  body {
+    padding: 5em 0;
+    transition: 0ms;
+    font-size: 20px;
+  }
+
+  .new-entry {
+    display: none;
+  }
+
+  .content {
+    margin: 1em 2%;
+  }
+
+  .spacer {
+    height: 0;
+  }
+
+  .time-entry {
+    background-color: white;
+    border-radius: 0;
+    padding: 1em;
+    font-size: 20px;
+    display: inline-block;
+    /* time entry css */
+  }
+
+  .entry-inputs {
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-bottom: .5em;
+    padding: 25px;
+  }
+
+  .time-inputs {
+    display: block;
+  }
+
+  .entry-form {
+    width: 100%;
+  }
+
+  .start-timer {
+    padding: 15px;
+    font-size: 22px;
+    margin-top: .5em;
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+  }
+}

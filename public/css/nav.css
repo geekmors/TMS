@@ -1,8 +1,7 @@
 /* css for navbars */
 
 body {
-  padding-top: 7em; /* shifts the content down so its not under the fixed top nav */
-  padding-left: 100px;
+
   z-index: 0 !important;
 }
 
@@ -84,7 +83,7 @@ body {
 }
 
 .side-nav-expanded {
-  width: 270px;
+  width: 220px;
 }
 
 .sidenav-text {
