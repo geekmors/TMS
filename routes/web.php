@@ -5,11 +5,8 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SetupSystemController;
 use App\Http\Controllers\SystemSettingsController;
-<<<<<<< HEAD
 use App\Http\Controllers\TimesheetController;
-=======
 use App\Http\Controllers\UserManagementController;
->>>>>>> UC3
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,6 +30,7 @@ Route::middleware(['isLoggedIn'])->group(function(){
     Route::get('/signout', [LoginController::class,'signOut'])->name('signout');
     Route::view('/','pages.home')->name('home');
     Route::get('/roles', [RoleController::class,'index'])->name('roles');
+    Route::view('/reports','pages.reports')->name('reports');
     
     Route::get('/timesheet', [TimesheetController::class, 'index'])->name('timesheet');
     Route::post('/timesheet/create', [TimesheetController::class, 'newEntry'])->name('timesheet.newEntry');

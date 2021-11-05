@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('content')
-<div class="ml-3">
-    <h1>Dashboard</h1>
+<div class="ml-5">
+    <h1>Reports</h1>
 </div>
 @endsection

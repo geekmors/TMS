@@ -1,5 +1,5 @@
 @php
-$entry_summary_item_classes ="badge badge-secondary" //;"entry-info-grp border rounded p-2 m-2";
+$entry_summary_item_classes ="badge badge-secondary"; //;"entry-info-grp border rounded p-2 m-2";
 @endphp
 <script type="text/template" id="entrySummaryTemplate">
     <% for(let key in data){%>
