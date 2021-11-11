@@ -21,9 +21,15 @@ class ViewComposer {
   {
      
       $this->userSetting = [];
+      $this->isAdmin = false;
+      $this->isNotEmployee = false;
+
       if(auth()->check()){
         $userId = auth()->user()->id;
         $this->userSetting = UserSetting::where('users_id','=',$userId)->first();
+        $roleID = auth()->user()->role_id;
+        $this->isAdmin = $roleID == 1;// 1=admin
+        $this->isNotEmployee = $roleID !== 3; //2=HR and 3=Employee
       }
   }
 
@@ -34,6 +40,9 @@ class ViewComposer {
    */
   public function compose(View $view)
   {
+    $view->with('isAdmin', $this->isAdmin);
+    $view->with('isNotEmployee', $this->isNotEmployee);
+
     if($this->userSetting){
       $view->with('userSetting', $this->userSetting);
     }

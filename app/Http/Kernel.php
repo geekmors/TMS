@@ -69,5 +69,7 @@ class Kernel extends HttpKernel
         'isFirstUse'=>\App\Http\Middleware\IsFirstUse::class,
         'isNotLoggedIn'=>\App\Http\Middleware\IsNotLoggedIn::class,
         'isLoggedIn'=>\App\Http\Middleware\IsLoggedIn::class,
+        'isAdmin' => \App\Http\Middleware\IsAdmin::class,
+        'isNotEmployee'=>\App\Http\Middleware\IsNotEmployee::class,
     ];
 }

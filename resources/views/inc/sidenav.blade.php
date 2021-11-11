@@ -16,6 +16,7 @@
         <span class="ml-2 sidenav-text-visible sidenav-text" id="reports">Reports</span>
       </a>
 
+      @if($isAdmin)
       <a class="nav-link sidenav-items pl-4" href="/user">
         <i class="fa fa-users"></i>
         <span class="ml-2 sidenav-text-visible sidenav-text" id="management">User Management</span>
@@ -25,7 +26,7 @@
         <i class="fa fa-cogs"></i>
         <span class="ml-2 sidenav-text-visible sidenav-text" id="settings">System Settings</span>
       </a>
-
+      @endif
       <a class="nav-link sidenav-items pl-4" id="toggle" onclick="toggleNav()">
         <i class="fa fa-thumb-tack" id="toggle-icon"></i>
       </a>
@@ -49,7 +50,7 @@
           <i class="fa fa-file"></i>
           <span class="ml-2 sidenav-text-visible sidenav-text" id="reports">Reports</span>
         </a>
-
+        @if($isAdmin)
         <a class="nav-link sidenav-items" href="/users">
           <i class="fa fa-users"></i>
           <span class="ml-2 sidenav-text-visible sidenav-text" id="management">User Management</span>
@@ -59,6 +60,7 @@
           <i class="fa fa-cogs"></i>
           <span class="ml-2 sidenav-text-visible sidenav-text" id="settings">System Settings</span>
         </a>
+        @endif
         <a class="nav-link sidenav-items" href="/settings">
           <i class="fa fa-cog mr-2"></i>
             <span class="ml-2 sidenav-text-visible sidenav-text" id="preferences">Preferences</span>

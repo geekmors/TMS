@@ -32,9 +32,33 @@ Route::middleware(['isLoggedIn'])->group(function(){
     Route::get('/roles', [RoleController::class,'index'])->name('roles');
     Route::view('/reports','pages.reports')->name('reports');
     
+    // Routes for UC-8 to UC-10
+    //-------------------------
     Route::get('/timesheet', [TimesheetController::class, 'index'])->name('timesheet');
     Route::post('/timesheet/create', [TimesheetController::class, 'newEntry'])->name('timesheet.newEntry');
     Route::post('/timesheet/update', [TimesheetController::class, 'update'])->name('timesheet.update');
+    //----------------
+    Route::middleware(['isAdmin'])->group(function(){//only Admin users should access these routes.
+        // Routes for UC-2
+        //-------------------
+        //calls controller to load page only - app > http > SystemSettingsController
+        Route::get('/system-settings', [SystemSettingsController::class, 'index'])->name('viewPage');
+        //saving domain
+        Route::post('/system-settings', [SystemSettingsController::class, 'store'])->name('addDomain');
+        //deleting domain
+        Route::get('/system-settings/delete/{id}', [SystemSettingsController::class, 'delete'])->name('removeDomain');
+        //toggle on enforcement
+        Route::get('/system-settings/enforce', [SystemSettingsController::class, 'update'])->name('updateEnforcement');
+        //-------------------
+
+        // Routes for UC-3
+        //-------------------
+        //redirect to user management page
+        Route::get('/user', [UserManagementController::class, 'index'])->name('viewUsers');
+        //First Name Filter
+        Route::post('/user', [UserManagementController::class, 'search'])->name('filterFName');
+        //-------------------
+    });
 
 });
 
@@ -48,23 +72,6 @@ Route::middleware(['isFirstUse'])->group(function(){
 //-------------------
 
 
-// Routes for UC-2
-//-------------------
-//calls controller to load page only - app > http > SystemSettingsController
-Route::get('/system-settings', [SystemSettingsController::class, 'index'])->name('viewPage');
-//saving domain
-Route::post('/system-settings', [SystemSettingsController::class, 'store'])->name('addDomain');
-//deleting domain
-Route::get('/system-settings/delete/{id}', [SystemSettingsController::class, 'delete'])->name('removeDomain');
-//toggle on enforcement
-Route::get('/system-settings/enforce', [SystemSettingsController::class, 'update'])->name('updateEnforcement');
-//-------------------
 
 
-// Routes for UC-3
-//-------------------
-//redirect to user management page
-Route::get('/user', [UserManagementController::class, 'index'])->name('viewUsers');
-//First Name Filter
-Route::post('/user', [UserManagementController::class, 'search'])->name('filterFName');
-//-------------------
+
