@@ -110,10 +110,12 @@ $('.entry-log-list').on('click', '.cancel', function (e) {
     $(this).parent().find('span.entry_elapsed_time').setTextUsingAttr('data-backup')
 })
 $('.entry-log-list').on('click', '.resume', function (e) {
+    const timeEntryStrToken = 'timesheet_entry_00' + $('meta[name="ctms-ux-int"]').attr('content')
+    
     var entryName = $(this).siblings('span.item').find('input[name="entry_name"]').val()
 
     try {
-        if (appDB.get('timesheet_entry')) {
+        if (appDB.get(timeEntryStrToken)) {
             $("#holdWhileSendingData").val(entryName)
             $('.stop-timer').click()
         }
