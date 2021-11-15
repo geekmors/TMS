@@ -27,7 +27,7 @@ class LoginController extends Controller
     }
     // Will login the user to the session
     // create the user if the user does not exist
-    // run setup job if the system is currently being setup
+    // and if the user is the first user, the user will be sent to the systems settings page after login
     public function handleProviderCallback(Request $request) {
         // check if the login was successful
         try{
@@ -35,8 +35,6 @@ class LoginController extends Controller
         }
         catch(\Exception $e){
             // per UC-1
-            if($request->session()->has("run_setup"))
-                return redirect()->to('/setup');
             
             return redirect()->to('/login');    
         }
@@ -64,8 +62,9 @@ class LoginController extends Controller
         else{// if the user did not exist
             // create a new user
             $newUser = new Users;
-            // if we are in the setup process then the new user is set to admin, else set the new user to employee
-            $roleID = $request->session()->has("run_setup")? 1 /* admin */ : 3 /* employee */;
+            $usersDoNotExist = !Users::exists();
+            // if this is the first user then set the user as admin
+            $roleID = $usersDoNotExist? 1 /* admin */ : 3 /* employee */;
             $newUser->createUser($user, $roleID)->save();
             
             // add default user settings
@@ -75,10 +74,21 @@ class LoginController extends Controller
             //login the new user
             auth()->login($newUser, true);
 
-            // if we are in the setup process then we redirect to the next route in the setup process
-            if($request->session()->has('run_setup')){                
-                return redirect()->to('/setup/system-settings');
-            }
+            if($usersDoNotExist){
+                // add user's email domain to domain_list
+                $domain = new DomainList;
+                $domain->domain_name = explode('@', $newUser->email)[1]; //extract the domain
+                $domain->save();
+
+                $systemSetting = new SystemSetting;
+                $systemSetting->system_time = date('H:i:s'); //[K.A.] will change later on in the project
+                $systemSetting->enforce_domain = false;
+
+                // save the system settings
+                $systemSetting->save();
+
+                return redirect('/system-settings');
+            } 
             
         }
         // Redirect to the home page if the user is created and logged in

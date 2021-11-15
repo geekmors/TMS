@@ -64,11 +64,11 @@ Route::middleware(['isLoggedIn'])->group(function(){
 
 // Routes for UC-1
 //--------------------
-Route::middleware(['isFirstUse'])->group(function(){
+/*Route::middleware(['isFirstUse'])->group(function(){
     Route::get('/setup', [SetupSystemController::class, 'index'])->name('initSetup');
     Route::get('/setup/system-settings', [SetupSystemController::class, 'viewSetupSystemSettings'])->name('setupSystemSettings');
     Route::post('/setup/system-settings', [SetupSystemController::class, 'createSetupSystemSettings'])->name('createSystemSettings');
-});
+});*/
 //-------------------
 
 

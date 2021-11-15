@@ -23,7 +23,7 @@ class Kernel extends HttpKernel
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        \App\Http\Middleware\SetupSystem::class,
+        //\App\Http\Middleware\SetupSystem::class,
     ];
 
     /**
@@ -66,7 +66,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'isFirstUse'=>\App\Http\Middleware\IsFirstUse::class,
+        //'isFirstUse'=>\App\Http\Middleware\IsFirstUse::class,
         'isNotLoggedIn'=>\App\Http\Middleware\IsNotLoggedIn::class,
         'isLoggedIn'=>\App\Http\Middleware\IsLoggedIn::class,
         'isAdmin' => \App\Http\Middleware\IsAdmin::class,
