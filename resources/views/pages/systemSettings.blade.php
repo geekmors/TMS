@@ -136,8 +136,14 @@
 </style>
 
 <script>
+ $.ajaxSetup({
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+     });
     //button calls function for ajax deletion
     function removeSite(siteID){
+
         //merges the id passed with default id value of the container of that row
         var buttonID = "#siteDel"+siteID;
         $.ajax({
@@ -155,7 +161,7 @@
                 }
                 //if it failed to delete site, it will alert the user
                 else if(dataResult.statusCode==201){
-                    Alert({status: false, message:'Cannot removed the only site!'})
+                    Alert({status: false, message:'Cannot remove only domain!'})
                 }
                 
             }
