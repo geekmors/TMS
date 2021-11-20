@@ -1,6 +1,8 @@
 @extends('layouts.default')
 <title>User Management</title>
-
+@section('custom_js')
+    <script src="{{asset('js/updateUserRole.js')}}" type="text/javascript"></script>
+@endsection
 @section('content')
 <div class="container userManContainer">
     <h1>User Management</h1>
@@ -49,27 +51,21 @@
                     <td class="col-1">ID</td>
                     <td class="col-3">Name</td>
                     <td class="col-3">Email</td>
-                    <td class="col-2">Last Login</td>
+                    <td class="col-3">Last Login</td>
                     <td class="col-2">Role</td>
-                    <td class="col-1">Edit</td>
                 </tr>
                 @foreach ($users as $users)
                     <tr class="row userProfile userrole{{$users->role_id}}">
                         <td class="col-1 my-auto">{{ $users->id }}</td>
                         <td class="col-3 my-auto">{{ $users->last_name }}, {{ $users->first_name }}</td>
                         <td class="col-3 my-auto">{{ $users->email }}</td>
-                        <td class="col-2 my-auto">{{ $users->timestamp_lastlogin}}</td>
+                        <td class="col-3 my-auto">{{ $users->timestamp_lastlogin}}</td>
                         <td class="col-2 my-auto">
-                            @foreach ($userRoles as $userRole)
-                                @if ( $userRole->id ==  $users->role_id )
-                                    {{ $userRole->description}}
-                                @endif
-                            @endforeach
-                        </td>
-                        <td class="col-1 my-auto">
-                            <a href={{"/user/profile/".$users->id}} class="btn">
-                                <i class="fa fa-pencil-square-o"></i>
-                            </a>
+                            <select name="changeRole" data-user-id="{{$users->id}}" class="chRole" {{$users->id == auth()->user()->id ? "disabled" : ""}}>
+                                @foreach ($userRoles as $userRole)
+                                    <option value="{{ $userRole->id}}" @if ( $userRole->id ==  $users->role_id ) selected="true" disabled="disabled" @endif>{{ $userRole->description}}</option>
+                                @endforeach
+                            </select>
                         </td>
                     </tr>
                 @endforeach

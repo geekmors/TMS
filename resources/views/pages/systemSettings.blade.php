@@ -73,13 +73,13 @@
                 <div class="allowedDom rounded">
                     <table>
                         @foreach ($dName as $dName)
-                        <tr class="border-bottom border-dark dataRow">
+                        <tr class="border-bottom border-dark dataRow" id="siteDel{{$dName->id}}">
                             <td class="col-sm-11">
                                 {{ $dName->domain_name }}
                             </td>
                             <td class="col-sm-1">
                                 <!-- DELETE BUTTON FOR EACH RECORD -->
-                                <a href={{"/system-settings/delete/".$dName->id}} class="btn btn-danger"><i class="fa fa-trash-o"></i></a>
+                                <a class="btn btn-danger" onclick="removeSite({{$dName->id}})"><i class="fa fa-trash-o"></i></a>
                                 <!-- DELETE BUTTON END -->
                             </td>
                         </tr>
@@ -134,4 +134,32 @@
         padding: 7px 0;
     }
 </style>
+
+<script>
+    //button calls function for ajax deletion
+    function removeSite(siteID){
+        //merges the id passed with default id value of the container of that row
+        var buttonID = "#siteDel"+siteID;
+        $.ajax({
+            url: "/system-settings/removeSite",
+            type: "POST",
+            data: {
+                siteID: siteID				
+            },
+            success: function(dataResult){
+                var dataResult = JSON.parse(dataResult);
+                //if it succeeded to delete site, it will hide the button
+                if(dataResult.statusCode==200){
+                    $(buttonID).fadeOut();
+                    Alert({status: true, message:'Successfully removed site'});
+                }
+                //if it failed to delete site, it will alert the user
+                else if(dataResult.statusCode==201){
+                    Alert({status: false, message:'Cannot removed the only site!'})
+                }
+                
+            }
+        });
+    }
+</script>
 @endsection

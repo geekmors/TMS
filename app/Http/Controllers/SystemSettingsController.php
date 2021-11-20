@@ -48,16 +48,24 @@ class SystemSettingsController extends Controller
         }
     }
 
-
-    public function delete($id) {
-        //find record from id provided and deletes it
-        $dList = DomainList::find($id);
-        $dList->delete();
-
-        //after having it deleted, redirects to system setting page, showing update
-        return redirect('/system-settings');
+    public function removeSite(){
+        //gets the amount of sites
+        $amount = DomainList::select('select * from domain_list')->count();
+        //if there are more than one site, it's removed; else it notifies the user of illegal action
+        if($amount > 1){
+            $siteID = $_POST['siteID'];
+            //find the row using the passed id
+            $dList = DomainList::find($siteID);
+            //delete row
+            $dList->delete();
+            //return successful message
+            echo json_encode(array("statusCode"=>200));
+        }
+        else{
+            //return failed message
+            echo json_encode(array("statusCode"=>201));
+        }
     }
-
 
     public function update() {
         //create copy of systemSetting db
@@ -82,7 +90,6 @@ class SystemSettingsController extends Controller
                 $sysSet->enforce_domain = 1;
             }
         }
-        /*echo($sysSet->system_time);*/
 
         //getting current time 
         $currentTime = \Carbon\Carbon::now()->toDateTimeString();

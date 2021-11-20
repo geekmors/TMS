@@ -46,9 +46,11 @@ Route::middleware(['isLoggedIn'])->group(function(){
         //saving domain
         Route::post('/system-settings', [SystemSettingsController::class, 'store'])->name('addDomain');
         //deleting domain
-        Route::get('/system-settings/delete/{id}', [SystemSettingsController::class, 'delete'])->name('removeDomain');
+        Route::post('/system-settings/removeSite', [SystemSettingsController::class, 'removeSite'])->name('removeThisDomain');
+
         //toggle on enforcement
         Route::get('/system-settings/enforce', [SystemSettingsController::class, 'update'])->name('updateEnforcement');
+        //-------------------
         //-------------------
 
         // Routes for UC-3
@@ -57,6 +59,8 @@ Route::middleware(['isLoggedIn'])->group(function(){
         Route::get('/user', [UserManagementController::class, 'index'])->name('viewUsers');
         //First Name Filter
         Route::post('/user', [UserManagementController::class, 'search'])->name('filterFName');
+        //Update User's role
+        Route::post('/updateRole/{UID}', [UserManagementController::class, 'update'])->name('UpdateRole');
         //-------------------
     });
 
@@ -70,7 +74,6 @@ Route::middleware(['isLoggedIn'])->group(function(){
     Route::post('/setup/system-settings', [SetupSystemController::class, 'createSetupSystemSettings'])->name('createSystemSettings');
 });*/
 //-------------------
-
 
 
 
