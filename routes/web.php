@@ -48,7 +48,8 @@ Route::get('/system-settings', [SystemSettingsController::class, 'index'])->name
 //saving domain
 Route::post('/system-settings', [SystemSettingsController::class, 'store'])->name('addDomain');
 //deleting domain
-Route::get('/system-settings/delete/{id}', [SystemSettingsController::class, 'delete'])->name('removeDomain');
+Route::post('/system-settings/removeSite', [SystemSettingsController::class, 'removeSite'])->name('removeThisDomain');
+
 //toggle on enforcement
 Route::get('/system-settings/enforce', [SystemSettingsController::class, 'update'])->name('updateEnforcement');
 //-------------------
@@ -60,4 +61,6 @@ Route::get('/system-settings/enforce', [SystemSettingsController::class, 'update
 Route::get('/user', [UserManagementController::class, 'index'])->name('viewUsers');
 //First Name Filter
 Route::post('/user', [UserManagementController::class, 'search'])->name('filterFName');
+//Update User's role
+Route::post('/updateRole/{UID}', [UserManagementController::class, 'update'])->name('UpdateRole');
 //-------------------

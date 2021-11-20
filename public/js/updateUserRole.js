@@ -1,0 +1,59 @@
+$(document).ready(function(){
+    $.ajaxSetup({
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+     });
+
+    //AJAX User Role Update
+    $(".chRole").on('change', function(){
+        //*getting the id of the selected user 
+        $tr = $(this).closest('tr');
+        /*var userData = $tr.children("td").map(function(){
+            return $(this).text();
+        }).get();*/
+        var UID = $(this).attr('data-user-id')//userData[0];
+        //alert("user id: "+selUserID);
+
+        //*get the selected value from the dropdown
+        var newRoleVal = $(this).val();
+        //alert("new role: "+newRoleVal);
+
+
+
+        $.ajax({
+            type: "POST",
+            url: "/updateRole/"+UID,
+            data: {
+                newRoleVal:newRoleVal
+                },
+            success: function(response) {
+                console.log(response);
+                alert("data updated");
+                //location.reload();
+            },
+            error: function(error) {
+                console.log(error);
+                //location.reload();
+            }
+        });
+    });
+});
+
+function Alert({status, message}){
+    let $template = $(`
+        <div class="alert alert-${status?'success':'danger'} alert-dismissible fade show" role="alert" style="
+            position:fixed;
+            width:80%;
+            top: 0;
+            right:0;
+            z-index: 99999;">
+            ${message}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    `)
+    $('body').append($template)
+    return $template
+}

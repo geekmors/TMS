@@ -50,7 +50,7 @@
           <span class="ml-2 sidenav-text-visible sidenav-text" id="reports">Reports</span>
         </a>
 
-        <a class="nav-link sidenav-items" href="/users">
+        <a class="nav-link sidenav-items" href="/user">
           <i class="fa fa-users"></i>
           <span class="ml-2 sidenav-text-visible sidenav-text" id="management">User Management</span>
         </a>
