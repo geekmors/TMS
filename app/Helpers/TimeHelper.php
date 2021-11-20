@@ -4,6 +4,18 @@ namespace App\Helpers;
 use App\Helpers\TimeStringFormatHelpers;
 
 class TimeHelper{
+    public function toTimeString($time){
+        $time_arr = explode(':', $time);
+        $hr = intval($time_arr[0]);
+        $min = intval($time_arr[1]);
+        return $hr.'h '.$min.'m';
+    }
+    public function toDecimalTime($time){
+       $time_arr = explode(':', $time);
+       $hr = intval($time_arr[0]);
+       $min = intval($time_arr[1]);
+       return number_format($hr+($min / 60), 2); 
+    }
     public function getRegularHours($totalTime, $maxHrsBeforeOT = 8){// FUTURE get from systemsettings.maxHrsBeforeOT use default 8
         
         // convert time format string to array split by ':'

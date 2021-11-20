@@ -48,6 +48,8 @@ Route::middleware(['isLoggedIn'])->group(function(){
     // Route::get('/reports/user/{$id}/download/{$format}?<querystrings>')
     Route::middleware(['isNotEmployee'])->group(function(){
         //Route::get('/reports/all?<querystrings>')
+        Route::get('/reports/all', [ReportController::class, 'allUserReport'])->name('all-user-report');
+        Route::get('/reports/all/download/csv', [ReportController::class, 'downloadAllUserReportCSV']);
         //Route::get('/reports/all/download/{$format}?<querystrings>')
     });
     //--------------

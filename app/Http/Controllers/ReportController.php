@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+
 use App\Models\Time;
 use App\Models\Users;
 class ReportController extends Controller
@@ -33,9 +35,21 @@ class ReportController extends Controller
         }
     }
     public function allUserReport(Request $request){
+        $defaultFrom = strtotime(date('Y-m-d').' -20 days');
         // get querystrings
+        $query_params = [
+            "from_date" => $request->query("from_date", date("Y-m-d", $defaultFrom)),
+            "to_date" => $request->query("to_date", date("Y")."-12-31"),
+            "sort_name" => $request->query("sort_name", 'asc'),
+            "sort_date" => $request->query("sort_date", 'asc'),
+            "sort_hours" => $request->query("sort_hours", 'asc')
+        ];
         // get data based on query strings
+        $reportData = Time::reportAll($query_params);
         // render page or json
+        if($request->query("json", "false") == "true")
+            return response()->json($reportData);
+        return view('pages.all-user-report', ["reportData" => $reportData, "query_params"=>$query_params]);
     }
     public function downloadUserReportCSV(Request $request){
         // get query params
@@ -45,11 +59,32 @@ class ReportController extends Controller
         // send csv for download
     }
     public function downloadAllUserReportCSV(Request $request){
-        // get query params
-        // get data based on query params
+        $defaultFrom = strtotime(date('Y-m-d').' -20 days');
+        // get querystrings
+        $query_params = [
+            "from_date" => $request->query("from_date", date("Y-m-d", $defaultFrom)),
+            "to_date" => $request->query("to_date", date("Y")."-12-31"),
+            "sort_name" => $request->query("sort_name", 'asc'),
+            "sort_date" => $request->query("sort_date", 'asc'),
+            "sort_hours" => $request->query("sort_hours", 'asc')
+        ];
+        // get data based on query strings
+        $reportData = Time::reportAll($query_params);
         // set headers
+        $headers = [
+            'Content-type'        => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="all_user_report-'.date('Y-m-d').'.csv"',
+        ];
         // generate csv string
+        $CSV_content = 'Date,Name,Hours Worked,Hours(decimal)';
+        foreach($reportData as $row){
+            $CSV_content .= PHP_EOL.date('d-M-y', strtotime($row["date"].' '.$row["total_hours"])).','
+                .$row["name"].','
+                .$row["hours_str"].','
+                .$row["hours_dec"];
+        }
         // send csv for download
+        return Response::make($CSV_content, 200, $headers);
     }
     private function getQueryParams($req){
         //Possible query string => ?from=YYYY-MM-DD&to=YYYY-MM-DD&sort_from=asc|desc&sort_person=asc|desc&sort_hours=asc&desc&only_users=1,2,3,4,5
