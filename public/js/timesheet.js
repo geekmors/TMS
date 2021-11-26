@@ -18,9 +18,10 @@
     }
     
     $("#holdWhileSendingData").on("resume", function(e){
-        $('#entry-name').val($(this).val())
+        $('#entry-name').val($(this).val()).focus()
         $('.start-timer').click()
         $(this).val('')
+
     })
 
     $('.start-timer').click(function(e){

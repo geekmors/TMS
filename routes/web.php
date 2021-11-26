@@ -29,7 +29,7 @@ Route::middleware(['isNotLoggedIn'])->group(function(){
 // If the user is logged in, then these routes are made available
 Route::middleware(['isLoggedIn'])->group(function(){
     Route::get('/signout', [LoginController::class,'signOut'])->name('signout');
-    Route::view('/','pages.home')->name('home');
+    Route::redirect('/','/timesheet');
     Route::get('/roles', [RoleController::class,'index'])->name('roles');
     
     // Routes for UC-8 to UC-10
@@ -45,7 +45,9 @@ Route::middleware(['isLoggedIn'])->group(function(){
     Route::get('/reports', [ReportController::class, 'index'] )->name('reports');
     // Route::get('/reports/user/{$id}?<querystrings>')
     Route::get('/reports/user/{userID}', [ReportController::class, 'userReport'])->name('user-report');
+    Route::get('/reports/user/{userID}/entries', [ReportController::class, 'getEntriesForUserInDate'])->name('user-report-entries');
     // Route::get('/reports/user/{$id}/download/{$format}?<querystrings>')
+    Route::get('/reports/user/{userID}/download/csv', [ReportController::class, 'downloadUserReportCSV']);
     Route::middleware(['isNotEmployee'])->group(function(){
         //Route::get('/reports/all?<querystrings>')
         Route::get('/reports/all', [ReportController::class, 'allUserReport'])->name('all-user-report');

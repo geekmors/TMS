@@ -86,6 +86,7 @@ class Time extends Model
         $entrySummary = Time::getSummaryFromEntryQuerySet($entries);
         return $entrySummary;
     }
+    
     static public function reportAll($query_params){
         // get report data
         $rawSelect = `
@@ -132,9 +133,45 @@ class Time extends Model
         }
         return $reformated;
     }
-    static public function reportFor($query_params){
-        // get report data for user
+    static public function formatUserReport($data){
+        
+        $reformated = [];
+        $timeHelper = new TimeHelper;
+
+        foreach($data as $row){
+            $reformated[]= [
+                "date" => $row->date_worked,
+                "hours_str" => $timeHelper->toTimeString($row->total_hours),
+                "hours_dec" => $timeHelper->toDecimalTime($row->total_hours),
+                "total_hours"=>$row->total_hours,
+                "entry_count" => $row->entry_count
+            ];
+        }
+        return $reformated;
+    }
+    static public function reportFor($query_params, $userId){
+        $report = Time::selectRaw('date_worked, sec_to_time(SUM(time_to_sec(total_hours))) as total_hours, count(date_worked) as entry_count')
+            ->whereBetween('date_worked',[$query_params["from_date"], $query_params["to_date"]])
+            ->where('users_id', '=', $userId)
+            ->groupBy("date_worked")
+            ->orderBy("date_worked", $query_params["sort_date"])
+            ->get();
+    
+        // if no data exists then send empty array.
+        if(is_null($report)) return [];
+        
         // format report data
+        $report = Time::formatUserReport($report);
+
+        return $report;
         // return report data
+    }
+    static public function getEntriesFor($userId, $date){
+        $entries = Time::where("users_id", "=", $userId)
+            ->where("date_worked",'=', $date)
+            ->orderBy("time_in", "desc")
+            ->get();
+
+        return $entries ?? [];
     }
 }

@@ -1,11 +1,6 @@
 <!-- Side Nav bar -->
    <nav class="nav flex-column side-nav-expanded" id="side-nav" onmouseover="openNav()" onmouseout="closeNav()">
 
-      <a class="nav-link sidenav-items pl-4" href="/">
-        <i class="fa fa-tachometer"></i>
-        <span class="ml-2 sidenav-text-visible sidenav-text" id="dashboard">Dashboard</span>
-      </a>
-
       <a class="nav-link sidenav-items pl-4" href="/timesheet">
         <i class="fa fa-clock-o"></i>
         <span class="ml-2 sidenav-text-visible sidenav-text" id="timesheet">Timesheet</span>

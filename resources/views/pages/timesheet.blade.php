@@ -14,7 +14,7 @@
         <div class="time-entry">
             <div class="entry-form">
                 <div>
-                    <input type="text" id="entry-name" name="entry-name" value="" placeholder="Enter New Entry Title" class="entry-inputs mr-5">
+                    <input type="text" id="entry-name" name="entry-name" maxlength="80" value="" placeholder="Enter New Entry Title" class="entry-inputs mr-5">
                     <label for="entry-date">
                         <h5>Date:</h5>
                     </label>
@@ -121,4 +121,28 @@
 <script src="{{asset('js/Timer.js')}}"></script>
 <script src="{{asset('js/entrylist.js')}}"></script>
 <script src="{{asset('js/timesheet.js')}}"></script>
+
+    <style>
+
+        .chronos-input{
+            font-size: 14px;
+            outline: none;
+            border: gray 1px solid;
+            padding: 10px;
+            border-radius: 5px;
+            background-color:white;
+            text-align:left;
+            width: 100%;
+        }
+        .entry-list-item td{
+            vertical-align:middle;
+        }
+        .entry-inputs{
+            background-color:white;
+
+        }
+        .entry-inputs:disabled{
+            background-color: #f0f0f0
+        }
+    </style>
 @endsection
