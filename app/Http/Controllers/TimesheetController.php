@@ -103,7 +103,7 @@ class TimesheetController extends Controller
 
             $queryParams = [
                 "user_id" => $user_id,
-                "from" => $request->query("from", $defaultFrom),
+                "from" => $request->query("from", date("Y-m-d", $defaultFrom)),
                 "to" => $request->query("to", date("Y")."-12-31"),
                 "sort_date" => $request->query("sort_date", "desc"),
                 "sort_timeIn" => $request->query("sort_starttime", "desc")

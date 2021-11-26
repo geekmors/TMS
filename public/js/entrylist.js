@@ -56,7 +56,7 @@ function handleEdits(e) {
         // incase the start_time or end_time were updated, update the elapsed time on the UI
         updateElapsedTime($(this).parent().parent())
     }
-    $(this).parent().siblings('.save,.cancel').show()
+    $(this).parent().parent().find('.save,.cancel').show()
 }
 // gets a list of jquery objects to be used to access the time entry's data on the DOM
 function getEntryDataSelectors($ListItem) {
@@ -106,20 +106,22 @@ $('.entry-log-list').on('change', 'input.entry-data[type="date"], input.entry-da
 //--- Listen for cancel, save and resume button clicks
 $('.entry-log-list').on('click', '.cancel', function (e) {
     $(this).hide().siblings('.save').hide()
-    $(this).parent().find('input').setValueUsingAttr('data-backup')
-    $(this).parent().find('span.entry_elapsed_time').setTextUsingAttr('data-backup')
+    $(this).parent().parent().find('input').setValueUsingAttr('data-backup')
+    $(this).parent().parent().find('span.entry_elapsed_time').setTextUsingAttr('data-backup')
 })
 $('.entry-log-list').on('click', '.resume', function (e) {
-    var entryName = $(this).siblings('span.item').find('input[name="entry_name"]').val()
+    const timeEntryStrToken = 'timesheet_entry_00' + $('meta[name="ctms-ux-int"]').attr('content')
+    
+    var entryName = $(this).parent().parent().find('input[name="entry_name"]').val()
 
     try {
-        if (appDB.get('timesheet_entry')) {
+        if (appDB.get(timeEntryStrToken)) {
             $("#holdWhileSendingData").val(entryName)
             $('.stop-timer').click()
         }
     }
     catch (e) {
-        $('#entry-name').val(entryName)
+        $('#entry-name').val(entryName).focus()
         $('.start-timer').click()
     }
 
@@ -127,7 +129,7 @@ $('.entry-log-list').on('click', '.resume', function (e) {
 })
 $('.entry-log-list').on('click', '.save', function (e) {
     // check that entry name is not blank
-    let $_ = getEntryDataSelectors($(this).parent())
+    let $_ = getEntryDataSelectors($(this).parent().parent())
 
     if ($_.$entryName.val().trim().length == 0) {
         Alert({ status: false, message: 'Entry cannot have a blank entry name.' })

@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @if(auth()->check())
+    <meta name="ctms-ux-int" content="{{auth()->user()->id}}">
+    @endif
     <!--[END meta definitions]-->
     
     <title>{{config('app.name')}}</title>

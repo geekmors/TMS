@@ -1,5 +1,5 @@
 (function(){
-    
+    const timeEntryStrToken = 'timesheet_entry_00' + $('meta[name="ctms-ux-int"]').attr('content')
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -18,9 +18,10 @@
     }
     
     $("#holdWhileSendingData").on("resume", function(e){
-        $('#entry-name').val($(this).val())
+        $('#entry-name').val($(this).val()).focus()
         $('.start-timer').click()
         $(this).val('')
+
     })
 
     $('.start-timer').click(function(e){
@@ -34,7 +35,7 @@
         $('#entry-name').css('border','')
         
         try{ // see if there is a start time to use for the timer
-            var entryData = appDB.get('timesheet_entry')
+            var entryData = appDB.get(timeEntryStrToken)
             var timer = new Timer(entryData.startTime)
         }catch(e){
             console.log(e.message)
@@ -48,7 +49,7 @@
         $(this).hide()
         $('.stop-timer').show()
         
-        appDB.set('timesheet_entry', {
+        appDB.set(timeEntryStrToken, {
             date: $('#entry-date').val(),
             name: $('#entry-name').val(),
             startTimeString: timer.timeString,
@@ -73,7 +74,7 @@
             clearEntryForm()
             $this.hide()
             $('.start-timer').show()
-            appDB.resetKey('timesheet_entry')
+            appDB.resetKey(timeEntryStrToken)
             clearInterval(cron)
             cron = false
 
@@ -102,7 +103,7 @@
         $('.start-timer').click()
     }
     try{
-        var entryData = appDB.get('timesheet_entry')
+        var entryData = appDB.get(timeEntryStrToken)
         startTimerWith(entryData)
     }
     catch(e){

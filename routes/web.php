@@ -7,6 +7,7 @@ use App\Http\Controllers\SetupSystemController;
 use App\Http\Controllers\SystemSettingsController;
 use App\Http\Controllers\TimesheetController;
 use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\ReportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,9 +29,8 @@ Route::middleware(['isNotLoggedIn'])->group(function(){
 // If the user is logged in, then these routes are made available
 Route::middleware(['isLoggedIn'])->group(function(){
     Route::get('/signout', [LoginController::class,'signOut'])->name('signout');
-    Route::view('/','pages.home')->name('home');
+    Route::redirect('/','/timesheet');
     Route::get('/roles', [RoleController::class,'index'])->name('roles');
-    Route::view('/reports','pages.reports')->name('reports');
     
     // Routes for UC-8 to UC-10
     //-------------------------
@@ -38,6 +38,24 @@ Route::middleware(['isLoggedIn'])->group(function(){
     Route::post('/timesheet/create', [TimesheetController::class, 'newEntry'])->name('timesheet.newEntry');
     Route::post('/timesheet/update', [TimesheetController::class, 'update'])->name('timesheet.update');
     //----------------
+    
+
+    // Routes for UC-13 & UC-14 (note: use case ids may change)
+    //-------------
+    Route::get('/reports', [ReportController::class, 'index'] )->name('reports');
+    // Route::get('/reports/user/{$id}?<querystrings>')
+    Route::get('/reports/user/{userID}', [ReportController::class, 'userReport'])->name('user-report');
+    Route::get('/reports/user/{userID}/entries', [ReportController::class, 'getEntriesForUserInDate'])->name('user-report-entries');
+    // Route::get('/reports/user/{$id}/download/{$format}?<querystrings>')
+    Route::get('/reports/user/{userID}/download/csv', [ReportController::class, 'downloadUserReportCSV']);
+    Route::middleware(['isNotEmployee'])->group(function(){
+        //Route::get('/reports/all?<querystrings>')
+        Route::get('/reports/all', [ReportController::class, 'allUserReport'])->name('all-user-report');
+        Route::get('/reports/all/download/csv', [ReportController::class, 'downloadAllUserReportCSV']);
+        //Route::get('/reports/all/download/{$format}?<querystrings>')
+    });
+    //--------------
+
     Route::middleware(['isAdmin'])->group(function(){//only Admin users should access these routes.
         // Routes for UC-2
         //-------------------
@@ -74,7 +92,3 @@ Route::middleware(['isLoggedIn'])->group(function(){
     Route::post('/setup/system-settings', [SetupSystemController::class, 'createSetupSystemSettings'])->name('createSystemSettings');
 });*/
 //-------------------
-
-
-
-
