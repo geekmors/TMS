@@ -50,7 +50,7 @@ To setup the project open a terminal/console and follow these steps.
     ```
     $ php artisan storage:link
     ```
-11. Add Google client Id and secret to your .env file. **Message Karl so he provides his one** 
+11. Add Google client Id and secret to your .env file. **Message Karl so he provides his one** or follow [this tutorial](https://www.youtube.com/watch?v=xH6hAW3EqLk) to set up it up your self.
     ```
     GOOGLE_CLIENT_ID="<random_numbers>.apps.googleusercontent.com"
     GOOGLE_CLIENT_SECRET="<random_security_key>"

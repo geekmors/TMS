@@ -25,21 +25,21 @@ class ReportController extends Controller
             return redirect('/reports/user/'.(auth()->user()->id));
         }
         else{
-            $user = Users::where('id','=', $userID)->first();
-
-            
+            // get the user's data
+            $user = Users::where('id','=', $userID)->first();            
             // get querystrings
             $query_params = [
                 "from_date" => $request->query("from_date", date('Y-m-').'01'),
                 "to_date" => $request->query("to_date", date("Y")."-12-31"),
                 "sort_date" => $request->query("sort_date", 'asc'),
             ];
+            // get a list of all users
             $users = [];
-
+            // if the user is not an employee i.e. HR or admin then obtain a list of all users
             if(auth()->user()->role_id < 3){
                 $users = Users::all();
             }
-            else{
+            else{ // else only add the only user to the users list
                 $users[] = $user;
             }
             // get data based on query strings
@@ -47,13 +47,9 @@ class ReportController extends Controller
             // render page or json
             if($request->query("json", "false") == "true")
                 return response()->json($reportData);
-                
+            // render user report page    
             return view('pages.user-report', ["cuser"=>$user, "reportData"=>$reportData, "params"=>$query_params, "users"=>$users]);
-                // render the user's report
-                    // get querystrings
-                    // get data based on querystrings
-                    // render page or json
-            }
+        }
     }
     public function allUserReport(Request $request){
         $defaultFrom = strtotime(date('Y-m-d').' -20 days');

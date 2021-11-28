@@ -9,17 +9,17 @@ use Log;
 
 class TimesheetController extends Controller
 {
-    //
+    // Renders the Timesheet page
     public function index(Request $request){
         
         // if the query string json is set to true i.e. ?json=true, then data is returned as json object
         if($request->query('json', false) == true){ 
-
             return $this->getEntryData(auth()->user()->id, $request);
         }
         // Expected URL: /timesheet?from=YYYY-MM-DD&to=YYYY-MM-DD&sort_date=asc|desc&sort_starttime=asc|desc
         // if query strings are not set, then it fallbacks to the default values for each query string variable
         $defaultFrom = strtotime(date('Y-m-d').' -20 days');
+        //create the query parameters
         $queryParams = [
             "user_id" => auth()->user()->id,
             "from" => $request->query("from", date("Y-m-d", $defaultFrom)),
@@ -27,22 +27,29 @@ class TimesheetController extends Controller
             "sort_date" => $request->query("sort_date", "desc"),
             "sort_timeIn" => $request->query("sort_starttime", "desc")
         ];
+        // returns the timesheet page and passes the timesheet entry data along with the query parameters for rendering
         return view('pages.timesheet', [
             "timeSheetEntries" => Time::getTimeEntryDataFor($queryParams),
             "queryParams" => $queryParams
         ]);
     }
+    // creates a new entry
     public function newEntry(Request $request){
+        // get the new entry data from the request body
         $entryData = $request->all();
         try{
+            // create a new time model instance
             $timeEntry = new Time;
+            // add the new netry to the database
             $timeEntry->newEntry(auth()->user()->id, $entryData)->save();
+            // send the new entry object back to the front end for UI updates
             return response()->json([
                 "status" => true, 
                 "message" => "new entry saved successfully", 
                 "data" => $timeEntry
             ]);
         }
+        // Log any errors and return error code 400
         catch(Exception $e){
             Log::channel('TMSErrors')->error($e->getMessage());
             Log::channel('TMSErrors')->error($request->all());

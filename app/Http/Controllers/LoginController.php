@@ -80,8 +80,9 @@ class LoginController extends Controller
                 $domain->domain_name = explode('@', $newUser->email)[1]; //extract the domain
                 $domain->save();
 
+                // add default system settings
                 $systemSetting = new SystemSetting;
-                $systemSetting->system_time = date('H:i:s'); //[K.A.] will change later on in the project
+                $systemSetting->system_time = date('H:i:s'); 
                 $systemSetting->enforce_domain = false;
 
                 // save the system settings
