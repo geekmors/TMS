@@ -58,9 +58,11 @@
     })
     $('.stop-timer').click(async function(e){
         if (!cron) return //only stop the timer if the timer is running
-        
+
+        // create a Timer instance to parse time and prep before sending to database
         let endTime = new Timer()
         
+        // get the data from the UI
         var data = {
             entry_name : $('#entry-name').val(),
             entry_date : $('#entry-date').val(),
@@ -70,27 +72,33 @@
         }
         var $this = $(this)
 
+        // call the send data function to send the data to the server
         sendData(data, function(){ // after success completion
             clearEntryForm()
             $this.hide()
             $('.start-timer').show()
             appDB.resetKey(timeEntryStrToken)
+
+            // stop the timer
             clearInterval(cron)
             cron = false
-
            
             if($("#holdWhileSendingData").val().trim().length > 0)
                 $("#holdWhileSendingData").trigger("resume")
            
         })
     })
-    var sendData = (data, cb) =>{    
+    // make the ajax request
+    var sendData = (data, cb) =>{
+        // send the data to the server using a POST request    
         $.post('/timesheet/create', data, function(response){
             Alert({status:true, message:'Entry successfully saved!'})
             console.log(response)
-            cb()
+            cb() // call the callback function
+            // update the UI's entry log history section
             renderEntrySummaryList()
         }).fail(function(xhr, status, error){
+            // show any errors that may occur
             console.log(xhr.responseText)
             Alert({status:false, message:`The timesheet entry could not be saved. Try reloading and saving again. If issue persists, have admin review error logs.`})
         })
