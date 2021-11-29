@@ -38,32 +38,32 @@ return redirect('/preferences');
 
 
 public function update(Request $request){
-    $preferences = UserSetting::find(auth()->user()->id);
-    if($request->hasFile('image')){
-         $request->validate([
-            'typo'=>'required',
-            'image'=>'required|mimes:jpg,png,jpeg|max:5048' 
-         ]);
-         $imagename= time(). '.'. $request->image->extension(); 
-         $request->image->move(public_path('images'),$imagename);
+        $preferences = UserSetting::find(auth()->user()->id);
+        if($request->hasFile('image')){
+            $request->validate([
+                'typo'=>'required',
+                'image'=>'required|mimes:jpg,png,jpeg|max:5048' 
+            ]);
+            $imagename= time(). '.'. $request->image->extension(); 
+            $request->image->move(public_path('images'),$imagename);
+            
+            $preferences->avatar= '/images/'.$imagename;
+            $preferences->avatar_original= '/images/'.$imagename;
+            
+            $preferences->save();
+            
+            
         
-         $preferences->avatar= $imagename;
-         $preferences->avatar_original= $imagename;
-         
-         $preferences->save();
-        
-         
-    
 
-} 
-$textsize= TypographySize::where('description','=',$request->typo)->first()->id ;
+    } 
+    $textsize= TypographySize::where('description','=',$request->typo)->first()->id ;
 
-if(is_numeric($textsize)){
-    $preferences->typography_size_id = $textsize;
-    $preferences->save();
-}
-return redirect('/preferences');
-}
+    if(is_numeric($textsize)){
+        $preferences->typography_size_id = $textsize;
+        $preferences->save();
+    }
+    return redirect('/preferences');
+    }
 
 }
 

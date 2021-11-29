@@ -7,7 +7,7 @@
 <div class=" ml-3 pl-0 container preferencesContainer">
     <div class="col-4">
   @foreach($preferences as $preference)
-            <img class="avatar_img" src="{{asset('images/'.$preference->avatar)}}">
+            <img class="avatar_img" src="{{$preference->avatar}}">
         
         @endforeach
     </div>
