@@ -1,12 +1,14 @@
 <?php
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SetupSystemController;
 use App\Http\Controllers\SystemSettingsController;
 use App\Http\Controllers\TimesheetController;
+use App\Http\Controllers\UserSettingController;
 use App\Http\Controllers\UserManagementController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -68,3 +70,11 @@ Route::get('/user', [UserManagementController::class, 'index'])->name('viewUsers
 //First Name Filter
 Route::post('/user', [UserManagementController::class, 'search'])->name('filterFName');
 //-------------------
+
+Route::get('/preferences',[UserSettingController::class, 'index'])->name('viewPreference');
+Route::get('/preferences/darkmode',[UserSettingController::class,'darkmode'])->name('darkmode');
+Route::post('/preferences/update',[UserSettingController::class, 'update'])->name('update');
+// Route::post('/preferences/store',function(Request $request){
+//     dd($request()->all());
+// });
+Route::post('/preferences',[UserSettingController::class, 'update'])->name('updatePreference');

@@ -25,7 +25,7 @@
                 </a>
                 <div class="dropdown-menu" id="profile-dropdown">
                     <a class="dropdown-item" href=""><i class="fa fa-bell mr-2"></i>ACTION HERE</a>
-                    <a class="dropdown-item" href="/settings"><i class="fa fa-cog mr-2"></i>Preferences</a>
+                    <a class="dropdown-item" href="/preferences"><i class="fa fa-cog mr-2"></i>Preferences</a>
                     <a class="dropdown-item" href="/signout"><i class="fa fa-sign-out mr-2"></i>Sign Out</a>
                 </div>
             </li>
