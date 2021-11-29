@@ -21,7 +21,7 @@
                     @endif
                 </a>
                 <div class="dropdown-menu" id="profile-dropdown">
-                    <a class="dropdown-item" href="/settings"><i class="fa fa-user mr-2"></i>{{auth()->user()->first_name.' '.auth()->user()->last_name}}</a>
+                    <a class="dropdown-item" href="/preferences"><i class="fa fa-user mr-2"></i>{{auth()->user()->first_name.' '.auth()->user()->last_name}}</a>
                     <a class="dropdown-item" href="/signout"><i class="fa fa-sign-out mr-2"></i>Sign Out</a>
                 </div>
             </li>

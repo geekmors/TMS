@@ -1,11 +1,12 @@
 <?php
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SetupSystemController;
 use App\Http\Controllers\SystemSettingsController;
 use App\Http\Controllers\TimesheetController;
+use App\Http\Controllers\UserSettingController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\ReportController;
 /*
@@ -82,6 +83,18 @@ Route::middleware(['isLoggedIn'])->group(function(){
         //-------------------
     });
 
+    // UC-11
+    //----------------
+
+    Route::get('/preferences',[UserSettingController::class, 'index'])->name('viewPreference');
+    Route::get('/preferences/darkmode',[UserSettingController::class,'darkmode'])->name('darkmode');
+    Route::post('/preferences/update',[UserSettingController::class, 'update'])->name('update');
+    // Route::post('/preferences/store',function(Request $request){
+    //     dd($request()->all());
+    // });
+    Route::post('/preferences',[UserSettingController::class, 'update'])->name('updatePreference');
+    //-----------
+
 });
 
 // Routes for UC-1
@@ -90,5 +103,9 @@ Route::middleware(['isLoggedIn'])->group(function(){
     Route::get('/setup', [SetupSystemController::class, 'index'])->name('initSetup');
     Route::get('/setup/system-settings', [SetupSystemController::class, 'viewSetupSystemSettings'])->name('setupSystemSettings');
     Route::post('/setup/system-settings', [SetupSystemController::class, 'createSetupSystemSettings'])->name('createSystemSettings');
-});*/
-//-------------------
+});
+//-------------------*/
+
+
+
+
